@@ -1,0 +1,98 @@
+<!--
++-------------------------------------------------------------+
+| UNIFAL – Universidade Federal de Alfenas.                    |
+| BACHARELADO EM CIENCIA DA COMPUTACAO.                        |
+| Trabalho..: Escalonamento por Prioridade                     |
+| Disciplina: Sistemas Operacionais                            |
+| Professor.: Fellipe Rey                                      |
+| Aluno(s): Maicon Almeida Mian 2023.1.08.013                  |
++-------------------------------------------------------------+
+-->
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalonamento Por Prioridade</title>
+    <link rel = "stylesheet" type="text/css" href="Style/style.css">
+</head>
+<body> 
+
+    <p class="titulo"> Escalonamento Por Prioridade </p>
+    <p class="texto" > Por: Maicon Almeida Mian (RA:2023.1.08.013) | Sistemas Operacionais [DCE131] | Professor: Fellipe Rey</p>
+
+    <!-- div para as entradas do usuário -->
+    <div class = "EntradasDoUsuario">
+        <!-- div para criação dos níveis -->
+        <div class="criacaoNiveis">
+            <h5 class="tituloNivel">Niveis Prioridade</h5>
+            <p class="informacao"> Numero de níveis (entre 1 e 10): </p>
+            <input type="number" id="numeroNiveis"  class="entry">
+            <button onclick="criarNiveis()" id="botaoCriaNiveis" class="botaoSimples"> CRIAR </button>
+        </div>
+        <!-- div para criação do processo -->
+        <div class="criacaoProcesso">
+            <h5 class="tituloCriacaoProcesso">Criação Processo</h5>
+            <p class="informacao"> Tamanho do processo: </p>
+            <input type="number" id="tamanhoprocesso" class="entry">
+            <p class="informacao"> Prioridade do processo: </p>
+            <input type="number" id="prioridadeprocesso" class="entry">
+            <button onclick="criarProcesso()" id="botaoCriaProcesso" class="botaoSimples"> CRIAR </button>
+        </div>
+        <!-- div para criação de processos aleatórios -->
+        <div class="processoAleatorio">
+            <h5 class="tituloProcessoAleatorio">Criar Processo Aleatorio</h5>
+            <input type="checkbox" id="criarProcessoAleatorio" class="Checkbox"> 
+            <p class="informacao"> Probabilidade do processo ser gerado: </p>
+            <input type="number" id="Probabilidade"  class="entry">
+            <p class="informacao"> Tamanho máximo que um processo pode ter: </p>
+            <input type="number" id="MaxTamanho"  class="entry">
+        </div>
+        <!-- div para criação de processos aleatórios -->
+        <div class="iniciaProcessamento">
+            <h5 class="tituloIniciar">Iniciar</h5>
+            <p class="informacao"> Valor do quantum (em u.t): </p>
+            <input type="number" id="tamanhoQuantum"  class="entry">
+            <p class="informacao"> Tempo sem executar para subir de prioridade (em u.t): </p>
+            <input type="number" id="SubirPrioridade"  class="entry">
+            <div>
+                <button onclick="iniciar()" id="botaoInicia" class="botaoInicia"> INICIAR </button>
+                <button onclick="limpar()" id="botaoLimpa" class="botaoLimpa disabled" disabled> LIMPAR </button>
+                <button onclick="parar()" id="botaoPara" class="botaoPara disabled" disabled> PARAR </button>
+            </div>
+        </div>
+    
+    </div>
+
+    <p class="titulo" > Acompanhamento do Processamento </p>
+
+    <!-- div para saida dos dados -->
+    <div class="Saida">
+        <div class="NiveisPrioridade">
+            <p> Niveis de Prioridade </p>
+            <!-- div dinâmica responsável por agrupar todos os níveis e os processos dentro deles -->
+            <div id="niveis" class="niveis"></div>
+        </div>
+        <div class="processoEmExecução">
+            <p> Executado </p>
+            <!-- div dinâmica responsável por mostrar o processo executado no último u.t -->
+            <div id="processoExecutando"></div>
+        </div>
+        
+        <div class="linhaDoTempo">
+            <p> Linha do tempo</p>
+             <!-- div dinâmica responsável por mostrar a linha do tempo de execução -->
+            <div id="linhaDoTempo"></div>
+        </div>
+        
+    </div>
+    
+    <!-- scripts -->
+    <script src="scripts/Processo.js"></script>
+    <script src="scripts/GestorDeNiveis.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/visualizacao.js"></script>
+    <script src="scripts/gerenciadorProcessos.js"></script>
+    <script src="scripts/NivelPrioridade.js"></script>
+    
+</body>
