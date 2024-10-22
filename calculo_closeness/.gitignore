@@ -1,0 +1,6 @@
+grafos/*
+obj/*
+*.o
+app/*
+.vscode/*
+__pycache__/*
