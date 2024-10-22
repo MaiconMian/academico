@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="540.0" prefWidth="1000.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tela.PagEdicaoControlador">
+   <children>
+      <Label fx:id="NomeEmpresaCadastrotxt" layoutX="82.0" layoutY="14.0" text="Blue Velvet Music Store" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="Arial Bold" size="46.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textProdutoEdicao" layoutX="23.0" layoutY="120.0" prefHeight="50.0" prefWidth="300.0" promptText="Nome do Produto..." styleClass="rounded-text-field" stylesheets="@style.css" AnchorPane.topAnchor="133.0">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <TextField fx:id="textMarcaEdicao" layoutX="350.0" layoutY="196.0" prefHeight="50.0" prefWidth="300.0" promptText="Marca..." styleClass="rounded-text-field">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <TextField fx:id="textDescricaoEdicao" alignment="TOP_LEFT" layoutX="23.0" layoutY="258.0" prefHeight="168.0" prefWidth="960.0" promptText="Descrição do Produto..." styleClass="text-field-descricao">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <TextField fx:id="textPrecoEdicao" layoutX="355.0" layoutY="133.0" prefHeight="50.0" prefWidth="300.0" promptText="Preço..." styleClass="rounded-text-field" stylesheets="@style.css">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <TextField fx:id="textCustoEdicao" layoutX="682.0" layoutY="133.0" prefHeight="50.0" prefWidth="300.0" promptText="Custo..." styleClass="rounded-text-field">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <TextField fx:id="textCategoriaEdicao" layoutX="23.0" layoutY="196.0" prefHeight="44.0" prefWidth="300.0" promptText="Categoria..." styleClass="rounded-text-field">
+         <font>
+            <Font size="23.0" />
+         </font></TextField>
+      <Button fx:id="buttonSalvar" layoutX="885.0" layoutY="461.0" mnemonicParsing="false" onAction="#buttonSalvar" prefHeight="44.0" prefWidth="97.0" styleClass="blue-button" stylesheets="@style.css" text="Salvar">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <Button fx:id="buttonCancelarEdicao" layoutX="777.0" layoutY="461.0" mnemonicParsing="false" onAction="#changeScreenToMenu" prefHeight="44.0" prefWidth="97.0" styleClass="blue-button" stylesheets="@style.css" text="Cancelar">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <VBox layoutX="26.0" layoutY="67.0" prefHeight="44.0" prefWidth="960.0" styleClass="rounded-hbox" stylesheets="@style.css" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="71.0">
+         <children>
+            <Label fx:id="EdicaoProdutostxt" text="Edição de Produto">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

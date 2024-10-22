@@ -1,0 +1,126 @@
+.root {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #dcdcdc;
+}
+.label {
+    -fx-text-fill: #dcdcdc;
+}
+.button {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #dcdcdc;
+    -fx-border-color: #5a5a5a;
+    -fx-border-width: 1px;
+}
+.button:hover {
+    -fx-background-color: #5a5a5a;
+}
+.text-field {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #dcdcdc;
+    -fx-border-color: #5a5a5a;
+}
+
+.text-field:focused {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #dcdcdc;
+}
+
+/* Style for table views */
+.table-view {
+    -fx-background-color: #2b2b2b;
+    -fx-control-inner-background: #3c3f41;
+    -fx-table-cell-border-color: #2b2b2b;
+    -fx-table-header-border-color: #2b2b2b;
+}
+
+.table-row-cell {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: #dcdcdc;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #3c3f41;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #3c3f41;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #5a5a5a;
+}
+
+/* Style for menu bars */
+.menu-bar {
+    -fx-background-color: #3c3f41;
+}
+
+.menu-item {
+    -fx-text-fill: #dcdcdc;
+}
+
+
+.rounded-hbox {
+    -fx-background-color: #4169E1;
+    -fx-background-radius: 15;
+    -fx-padding: 10;
+}
+
+
+.blue-button {
+    -fx-background-color: #4169E1;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #005d99;
+}
+
+.blue-button:hover {
+    -fx-background-color: #005d99;
+    -fx-border-color: #004c80;
+}
+
+.blue-button:pressed {
+    -fx-background-color: #004c80;
+    -fx-border-color: #003f66;
+}
+
+.transparent-vbox {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-background-radius: 20px;
+    -fx-border-width: 1px;
+}
+
+.rounded-text-field {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 8px;
+    -fx-border-color: #b0bec5;
+    -fx-border-width: 2px;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+}
+
+.text-field-descricao {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 8px;
+    -fx-border-color: #b0bec5;
+    -fx-border-width: 2px;
+}
+
+.small-text-field {
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+
+}
+.table-view .column-header {
+    -fx-background-color: #4169E1;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}

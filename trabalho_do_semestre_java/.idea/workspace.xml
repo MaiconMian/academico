@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a05aa60a-5b8d-423f-9a00-a77a36f7bf0e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tela/PagInicialControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tela/PagInicialControlador.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2hesGA7Mg36JLHCgeSMjT5blFzF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lucas/Documents/GitHub/TrabalhoSemestreOO&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\maico\Desktop\Poo\TrabalhoSemestreOO\src\main\java" />
+      <recent name="C:\Users\maico\Desktop\Poo\TrabalhoSemestreOO\src\main" />
+      <recent name="C:\Users\maico\Desktop\Poo\TrabalhoSemestreOO\src\main\java\tela" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lucas\Documents\GitHub\TrabalhoSemestreOO\src\main\resources\images" />
+      <recent name="C:\Users\Lucas\Documents\GitHub\TrabalhoSemestreOO\src\main\resources\tela\images" />
+      <recent name="C:\Users\maico\Desktop\Poo\TrabalhoSemestreOO\src\main\java\tela" />
+      <recent name="C:\Users\maico\Desktop\Poo\TrabalhoSemestreOO\src\main\resources\tela" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tela.Main" />
+      <module name="ProjetoOrientacaoObjetos" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tela.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="TrabalhoSemestreOO" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="TrabalhoSemestreOO" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-temurin-21.0.2-4caba194b151-7da56cdf" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a05aa60a-5b8d-423f-9a00-a77a36f7bf0e" name="Changes" comment="" />
+      <created>1717965781566</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717965781566</updated>
+      <workItem from="1717965782956" duration="1859000" />
+      <workItem from="1718063134254" duration="1305000" />
+      <workItem from="1718067407026" duration="1376000" />
+      <workItem from="1718144463720" duration="8895000" />
+      <workItem from="1718317191949" duration="39000" />
+      <workItem from="1718318652721" duration="11402000" />
+      <workItem from="1718563989370" duration="77000" />
+      <workItem from="1718564235678" duration="1161000" />
+      <workItem from="1718569961389" duration="3218000" />
+      <workItem from="1718579126412" duration="5545000" />
+      <workItem from="1718586664728" duration="180000" />
+      <workItem from="1718586978511" duration="332000" />
+      <workItem from="1718596700541" duration="1215000" />
+      <workItem from="1718639239774" duration="800000" />
+      <workItem from="1718644875605" duration="610000" />
+      <workItem from="1718646177485" duration="37000" />
+      <workItem from="1718646536154" duration="117000" />
+      <workItem from="1718646662389" duration="121000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
