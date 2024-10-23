@@ -9,8 +9,9 @@
 </p>
 
 
-A disciplina de orientação a objetos tem como objetivo explicar o paradigma, abrangendo desde o design orientado a objetos até o desenvolvimento e a programação em uma linguagem que adota esse modelo.
-*Início: Março/2024*
+A disciplina de orientação a objetos teve como objetivo explicar o paradigma, abrangendo desde o design orientado a objetos até o desenvolvimento e a programação em uma linguagem que adota esse modelo.
+
+*Início: Março/2024* (3° período)
 
 ## 📝 Trabalho
 
