@@ -224,10 +224,147 @@ GitWorkflow: Diretorio -> Stage Area -> Repositório
 
 ### CONCEITOS:
 - HEAD -> Ponteiro que aponta pro commit atual daquele repositório (mais recente)
-- git status -> verifica o que está na stage area, o que está no repositoprio ou no diretorio
 - .gitignore -> arquivos que o git deve ignorar nos commits e adds
 
+### CONFIGURAÇÃO e COMANDOS BASICOS:
+- ``` git status ```
+- ``` git config --global user.name "Maicon Mian"```
+- ```git config --global user.email "maicon.."```
+- ```git config --global core.editor "vscode"``` 
+- ```git config --list``` (lista todas as configurações, essas que estão em um aquivo (.gitconfig), mas não é recomendado alterar por ele)
+
+### CRIAÇÃO DE REPOSITORIO
+- ```git init ``` -> inicia o repositório no diretorio atual, criando uma pasta chamada .git com as configurações do mesmo
+- ```git add *``` -> o * pode ser um . para tudo ou o nome do arquivo que deve ser mandado pra stage area
+- ```git commit -m "mensagem" ``` -> manda da stage area pro repositorio
+-``` git log``` -> mostra todos os commits como também os autores.
+
+### MANIPULAÇÃO DE ARQUIVOS
+- ```git diff``` -> mostra todas as diferenças entre o arquivo do diretorio e do repositorio
+- ```git diff --staged``` -> mostra as diferenças entre o arquivo do diretorio e o que esta na stage area (-- repo, ++ diretorio)
+-``` git rm nomeArquivo``` -> Remove tanto do seu diretorio quanto do repositorio (joga pra stage area)
+pode remover manualmente e comittar depois
+- ``` git mv nomeArquivo LocalAtual/Novo Nome``` -> novamente, faz no repositorio e no diretorio (vai pra stage area). Ao renomear um arquivo, o git entende que você removeu o anterior e tá adicionando um arquivo com o nome novo.
+- ```git clean``` -> remove todos os arquivos do diretorio que nao tao no repositorio (-n lista eles antes)
+
+### REMOVER MODIFICAÇÕES
+
+- Sem mandar pra lugar nenhum
+```git checkout -- nomeArquivo``` -> restaura o arquivo do diretorio pro arquivo do repositório
+
+- Na stage Area
+```git reset HEAD nome arquivo ```-> retira da satage area 
+
+- Já commitado:
+```git commit —amend -m mensagem```(desfaz o ultimo commit e refaz ele)
+
+### RECUPERAR COMMITS ANTERIORES
+```git checkout CODIGODOCOMMIT``` -- NomeArquivo.
+
+```git reset --FUNCIONALIDADE codigoDoCommit ```-> transfere o HEAD pro commit que vc quer e faz, de acordo com a funcionalidade:
+- -- soft -> manda os arquivos que estava no commit pra stage area
+- -- mixed -> manda os arquivos que estavam no commit pro diretorio
+- -- hard -> não manda pra lugar nenhum
+
+### BRANCHES
+Formas de se trabalhar paralelamente, forma de assegurar que so mandara para producao algo testado.
+
+- ```git -d branch NomeBranch ```-> Criar
+- ```git -d checkout branch NomeBranxh``` -> Mudar para ela
+- ```git branch —d nome ```(nao da pra remover estando nela) -> remover
+
+### MERGE EM BRANCHES
+Após feito um merge (com o comando git merge BranchMergeada), podem acontecer 3 tipos de merge: 
+
+- Fast-Forwald (a brendh original vai ate o commit 3 e a branch nova vai mais 2 commits, ou seja, nao tem como ter conflito, so tras o que e tem em uma pra outra)
+- Recursivo (quando duas branches tem arquivos diferentes alterados, ai apenas une as diferenças)
+- Conflict(cada branch alterou o mesmo arquivo da mesma forma, ai voce deve abrir o editor de texto e resolver o conflito)
+
 ## 🔌 JDBC
+Biblioteca Java responsável por ligar o banco de dados ao seu código, pelo Maven, basta adicionar a dependência: mysql.connector.java
+
+### CONEXÃO
+
+são necessárias os imports:
+-``` import java.sql.Connection;```
+- ```import java.sql.DriverManager;```
+- ```import java.sql.SQLException;```
+
+Para conectar com o banco, é necessário criar uma classe (como a DataBaseUtility). Nela, é necessário definir:
+
+- ```private static final String USERNAME = "florentino";```
+-``` private static final String PASSWORD = "123456";```
+- ```private static final String CONNECTION_STRING ="jdbc:mysql://localhost:3306/hostelapp_jdbc";```
+
+Após fazer isso, você pode criar um método na sua classe que retona a conexão para você a usar em diversas partes do seu código:
+- ```return DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD); ```
+
+### CONNECTION
+Váriável responsável por criar a conexão em sí com o banco de dados, da seguinte forma:
+- ``` conn = DatabaseUtility.getConnection(RDBMS.MYSQL);```
+  
+### STATEMENT
+Usado para Querys com o JDBC (adiciona, remover, modificar)
+
+- ```Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ```-> pode ser percorrido (boa pratica) 
+- ``` Statement stmt = conn.createStatement();``` -> somente de avanço (só pode ler pra frente)
+
+Prepare Statment → verificação de segurança, já vem pré compilado, impede SqlINjection.
+- ``` PreparedStatement preStmt = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);```
+  
+Para usar, você coloca o ? no lugar da consulta e retorna em outra parte do código, á exemplo:
+- ```PreparedStatement stmt = conn.prepareStatement("SELECT * FROM ADMIN WHERE ADMIN_ID = ?");```
+= ```stmt.setInt(1, adminId);``` -> substitui a posição do primeiro ?
+
+
+### RESULTSET
+Retorna o resultado da consulta (normalmente, vindo de SELECT).
+
+- ```rs = stmt.executeQuery("SELECT * FROM admin");```
+- ```rs.next()``` -> sempre vai pegar o proximo elemento do resultado, pode se usado num while por exemplo para mostrar todos os cliente
+- ```rs.getString(NOMECOLUNA) ou rs.getInt(NOMECOLUNA) ```, pode ser usado: rs.getObject("GUEST_ID", Integer.class) 
+- ```rs.last()``` -> vai pra ultima linha
+- ```rs.first()``` -> vai pra primeira
+- ```rs.absoluted(int row)``` -> move a uma linha específica
+- ```rs.getRow()``` -> retorna a linha que estamos atualmente
+
+
+Todas essas variáveis podem ser fechadas colocando o nome delas .close
+
+Como usar o StringBuffer:
+
+- ```tringBuffer buffer = new StringBuffer();```
+- ```buffer.append("Guest ID......: " + rs.getInt("GUEST_ID") + "\n");```
+
+para setar o numero maximo de linhas, podemos usar o setMaxRows, o que é uma PESSIMA pratica, pos é necessário por o try e finally além de ter um desempenho ruim, o recomendado é ResultSet rs = stmt.executeQuery("SELECT * FROM GUEST LIMIT 5, 3");
+
+### INSERIR:
+- ```String sql = "INSERT into admin (userName, password) " + "VALUES (?, ?)"```
+- ```stmt.setString(1, bean.getUserName());```
+- ```stmt.setString(2, bean.getPassword());```
+
+### UPDATE:
+- ```String sql = "UPDATE ADMIN SET " +"USERNAME = ?, PASSWORD = ? " + "WHERE ADMIN_ID = ?";```
+### DELETAR:
+- ```String sql = "DELETE FROM ADMIN WHERE ADMIN_ID = ?";```
+
+ao fim de todos: int affected = stmt.executeUpdate();
+
+Como criar conexões é TRABALHOSO, é importante implementar e reutilizar, como um sigleton
+- InnoDB oferece suporte a transações, chaves estrangeiras, etc.
+- MyISAM é o mecanismo padrão, mas não oferece suporte a transações, por exemplo.
+
+```
+Metadados:
+   DatabaseMetaData metadata = conn.getMetaData();
+   String[] tableTypes = {"TABLE"};
+   rsTables = metadata.getTables("hostelapp_jdbc", "%", "%", tableTypes);
+   while (rsTables.next()) {
+   	System.out.println(rsTables.getString("TABLE_NAME"));
+   }
+```
+   
+JavaBens -> boas práticas, crie uma classe padrão para seu objeto com os atributos, gets e sets, e um controller para fazer modificações no banco
 
 ## 🏷️ JPA
 
