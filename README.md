@@ -410,13 +410,72 @@ this.getEntityManager() -> na frente dos demais:
 - ```@Enumered(EnumType.String```) ou Ordinal Tipo Enumerado
 
 Para mapear uma classe dentro da tabela de outra (como endereço em cliente) basta por isso na classe filha:
--``` @Enbeddable```
+- ``` @Enbeddable```
 Na pai, em cima do atributo:
--``` @Enbedded```
--``` @AtributesOverrides({
-          @Attribute Override (name=“name), @Columns=“NAME_ENDERECO”});```
+- ``` @Enbedded```
+- ``` @AtributesOverrides({ @Attribute Override (name=“name), @Columns=“NAME_ENDERECO”});```
 
 
 ## 🚀 Spring Boot 
+- Spring é um framework java focado em fornecer ferramentas para codagens de aplicações robustas e escaláveis, que desejam comunica com banco de dados, web, tudo de sí.
+- Spring Boot é um complemento do Spring que visa facilitar ainda mais a inicialização de aplicações Spring focados em Restful.
+
+Para rodar uma aplicação Spring com Maven, basta: ``` spring-boot:run```
+
+### PROGRAMA SIMPLES
+Para iniciar seu projeto com Spring, basta ir ao site, colocar a versão, dependencias necessárias, etc.
+
+Na assionatura da classe do seu programa para web, deve-se ter:
+- ```@SpringBootApplication ```-> classe principal do Spring
+- ``` @RestControlle```r -> controlador REST (reponsavel por tratar GET, POST, PUT, DELETE)
+- SpringApplication.run(DemoApplication.class, args); -> dentro da main, para iniciar a aplicação.
+
+```
+@GetMapping("/hello") -> mapeia que quando receber um GET com hello, /vai pra esse metodo
+    @RequestParam -> algo devera vir junto com a resuisição, o valor é name e se nada vier, fica world
+    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+      return String.format("Hello %s!", name);
+    }
+```
+- http://localhost:8080/hello -> ira rodar a explicação
+
+### PROGRAMA COM JDBC 
+Deve-se criar um projeto com a dependencia do JDBC e utlizar 
+- ``` import org.springframework.jdbc.core.JdbcTemplate;``` 
+- ```JdbcTemplate jdbcTemplate;```
+  
+Ele encapsula diversas operações do JDBC, tais como:
+- ```jdbcTemplate.execute("DROP TABLE customers IF EXISTS");``` -> executar comando
+- ```jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitUpNames); ```-> para inserir na tabela
+
+### PROGRAMA UTILIZANDO RESTFUL 
+Quando queremos comunicar uma aplicação com paginas web, utilizamos o sistema Restful, esse que pode ser incorporado em dois modos: Restful e MVC (no exemplo, com Thimeleaf) o restful retorna um Json e o front e responsavel por o incorporar enquanto o MVC leva uma pagina HTML, o que os diferencia e que o MVC tem uma tcnologia e fica preso a ela, enquanto o restful e o JSON e vc pode utilizar onde quiser.
+
+basicamente, teremos solicitacoes nesse estilo:
+
+/greetint?name=Maicon, onde o que vem depois do ? sao parametros
+
+para criar o controlador Rest, basta:
+- colocar @RestController antes do nome da classe
+- criar um metodo com @GetMapping(/greetint) pra mapear que recebe como parametro (@requestParam(value=“name”, defaultValue=“World) String name
+- retorna = return new Greeting(counter.incrementAndGet(), String.format(template, name))
+
+pronto, para chamar a aplicacao basta executar
+- @SpringBootAplication na classe com o main
+- SpringAplication.run(nomeClasse, argumentos); -> na main
+
+### PROGRAMA UTILIZANDO O THIMELEAF 
+Basicamente, o que tem de diferente e que iremos resolver as solicitacoes enviando um HTML pronto em vez de um Json, basta voce ter um controlador que vai mapear o POST e o GET:
+- ```@Controller```
+- ```@GetMapping(/greeting)```
+- ```@PostMappging(/greeting)```
+voce deve mapear eles em cada classe e recebe um model e retorna a pagina HTML, que deve ter um modelo (classe com os atributos) para retorno:
+```model.addAtribute(“greeting”, new greeting)```
+
+e nas paginas HTML devem ter o mesmo nome das solicitacoes e sempre terao:
+```xmls:th=line``` no read e durante todo o HTML terao referencias a pontos que serao mudados dinamicamente pelo thimeleaf, como:
+- ```th:catian=@{/greeting}```
+- ```th.objet=${classe}```
+- ```th.fiel=“*{id}”```
 
 
