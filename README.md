@@ -1,12 +1,14 @@
 <h1 align="center" style="font-weight: bold;"> Resumo Gestão do Ciclo de Vida da Aplicação 🔄 </h1>
 
-<p align="center">
-Resumo para P1  
-</p>
+Resumo para P1 | Data 08/11 | Maicon Mian
 
-<p align="center">
-Data 08/11  
-</p>
+### CONTEÚDO: 
+- [Métodos Ágeis (Scrum)](#-métodos-ágeis-scrum)
+- [MySQL](#-mysql)
+- [Git](#-git)
+- [JDBC](#-jdbc)
+- [JPA](#-jpa)
+- [Spring Boot](#-spring-boot)
 
 ## 📝 Métodos Ágeis (Scrum)
 
@@ -415,8 +417,8 @@ Na pai, em cima do atributo:
 - ``` @Enbedded```
 - ``` @AtributesOverrides({ @Attribute Override (name=“name), @Columns=“NAME_ENDERECO”});```
 
-
 ## 🚀 Spring Boot 
+
 - Spring é um framework java focado em fornecer ferramentas para codagens de aplicações robustas e escaláveis, que desejam comunica com banco de dados, web, tudo de sí.
 - Spring Boot é um complemento do Spring que visa facilitar ainda mais a inicialização de aplicações Spring focados em Restful.
 
