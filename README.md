@@ -1,13 +1,13 @@
-<h1 align="center" style="font-weight: bold;"> Resumo Gestão do Ciclo de Vida da Aplicação 🔄 </h1>
+<h1 align="center" style="font-weight: bold;">  🔄 Resumo Gestão do Ciclo de Vida da Aplicação 🔄 </h1>
 
 Resumo para P1 | Data 08/11 | Maicon Mian
 
 ### CONTEÚDO: 
 - [Métodos Ágeis (Scrum)](#-métodos-ágeis-scrum)
-- [MySQL](#-mysql)
+- [MySQL](#mysql)
 - [Git](#-git)
 - [JDBC](#-jdbc)
-- [JPA](#-jpa)
+- [JPA](#jpa)
 - [Spring Boot](#-spring-boot)
 
 ## 📝 Métodos Ágeis (Scrum)
@@ -160,6 +160,7 @@ PO turista, passivo, insustentavel.
 
 O Scrum dos Scrums é uma reunião que conecta várias equipes Scrum que estão trabalhando juntas em um projeto maior. Ele é usado para coordenar atividades e resolver dependências entre equipes, garantindo que todos estejam alinhados e que obstáculos interequipes sejam resolvidos rapidamente.
 
+<a name="mysql"></a>
 ## 🗄️ MySQL
 
 Para persistir os dados que utilizamos em uma aplicação, utilizamos banco de dados, esses que são baseados na linguagem SQL.
@@ -368,6 +369,7 @@ Metadados:
    
 JavaBens -> boas práticas, crie uma classe padrão para seu objeto com os atributos, gets e sets, e um controller para fazer modificações no banco
 
+<a name="jpa"></a>
 ## 🏷️ JPA
 Jpa encapsula o JDBC para que você o utilize mais facilmente, ele é convensão em cima de configuração, ou seja, é melhor já ter um projeto que já vem facilmente pré configurado, mesmo tendo que alterar coisas especídificas do que configurar tudo.
 
