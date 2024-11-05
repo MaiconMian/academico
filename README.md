@@ -367,6 +367,55 @@ Metadados:
 JavaBens -> boas práticas, crie uma classe padrão para seu objeto com os atributos, gets e sets, e um controller para fazer modificações no banco
 
 ## 🏷️ JPA
+Jpa encapsula o JDBC para que você o utilize mais facilmente, ele é convensão em cima de configuração, ou seja, é melhor já ter um projeto que já vem facilmente pré configurado, mesmo tendo que alterar coisas especídificas do que configurar tudo.
+
+JAVA EE -> JAKARTA EE (no java 8)
+
+Importante: informaçãoes do banco de dados para conexão ficam num arquivo XML chamado persistence, la vc coloca o nome do banco, o id, a senha, etc…
+
+### CRIANDO CONEXÃO 
+
+- ```private static EntityManeger entitymaneger```
+- ``` private statics EntityManegerFactory entitymanegerfactory```
+- ```statitc (cria) ```
+- ```para fechar, chama o atributo e da .close```
+
+### CRIANDO OBJETOS
+No topo da classe que será uma tabela:
+- ``` @Entity ```
+-``` @Table (name=“nome”) ```-> apenas caso queira mudar o nome
+
+Setando colunas:
+```
+@Id
+@Generated.Value(IDENTITY)
+```
+NORMAL:
+- se nao fizer nada, ele vai mapear cada um dos ateibutos com o nome original, vc pode mudar no get para:``` @Column(name=“”, nulltable=false)```
+
+### TRANSIÇÕES 
+
+No JPA, toda transicao (remover, modificar) tem que ter o:
+- ```this.entitymagener.gettransition().begin();```
+- ```código```
+- ```this.entitymagener.gettransition().commit();```
+  
+this.getEntityManager() -> na frente dos demais:
+- ```.merge(Objeto) ```-> tal que o Objeto foi modificado
+- ```.find(Classe.class, id)``` -> Encontrar um objeto pelo ID
+- ```.remove(Objeto) ```-> remover um objeto
+  
+- ```@Transient  ```-> para não rastrear algum atributo
+- ```@Temporal(Temporal.Type.TIMESTAMP) ```-> ANTES JAVA 8 voce tinha que colcoar isso pra definir se o Date era hora, dia, etc…, após o JAVA 8 ele mapeia automaticamente com o LocaDate, LocalDatetime, etc…
+- ```@Enumered(EnumType.String```) ou Ordinal Tipo Enumerado
+
+Para mapear uma classe dentro da tabela de outra (como endereço em cliente) basta por isso na classe filha:
+-``` @Enbeddable```
+Na pai, em cima do atributo:
+-``` @Enbedded```
+-``` @AtributesOverrides({
+          @Attribute Override (name=“name), @Columns=“NAME_ENDERECO”});```
+
 
 ## 🚀 Spring Boot 
 
