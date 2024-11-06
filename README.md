@@ -509,6 +509,11 @@ public class RelationalDataAccessApplication implements CommandLineRunner{
 [Programa Com Restful](https://spring.io/guides/gs/rest-service)
 Quando queremos comunicar uma aplicação com paginas web, utilizamos o sistema Restful, esse que pode ser incorporado em dois modos: Restful e MVC (no exemplo, com Thimeleaf) o restful retorna um Json e o front e responsavel por o incorporar enquanto o MVC leva uma pagina HTML, o que os diferencia e que o MVC tem uma tcnologia e fica preso a ela, enquanto o restful e o JSON e vc pode utilizar onde quiser.
 
+Classe necessária:
+```
+public record Greeting(long id, String content) { }
+```
+Essa classe é uma forma simples de implementar uma classe que será estática e ja vem com os métodos Set e Get.
 basicamente, teremos solicitacoes nesse estilo:
 
 /greetint?name=Maicon, onde o que vem depois do ? sao parametros
