@@ -426,6 +426,8 @@ Na pai, em cima do atributo:
 
 Para rodar uma aplicação Spring com Maven, basta: ``` spring-boot:run```
 
+GET é mais adequado para recuperar informações, enquanto POST é mais indicado para enviar ou criar novos dados no servidor.
+
 ### PROGRAMA SIMPLES
 [Programa Simples](https://spring.io/quickstart)
 Para iniciar seu projeto com Spring, basta ir ao site, colocar a versão, dependencias necessárias, etc.
