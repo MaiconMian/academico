@@ -456,6 +456,55 @@ Ele encapsula diversas operações do JDBC, tais como:
 - ```jdbcTemplate.execute("DROP TABLE customers IF EXISTS");``` -> executar comando
 - ```jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitUpNames); ```-> para inserir na tabela
 
+```java
+
+@SpringBootApplication // setando a classe principal do spring
+// Implements CommandLineRunner -> diz que a aplicação spring vai continuar rodando após iniciar
+public class RelationalDataAccessApplication implements CommandLineRunner{
+
+	// seta um logger para que conseguimos observar erros e acompanhar o processamento do sistema
+	private static final Logger log = LoggerFactory.getLogger(RelationalDataAccessApplication.class);
+
+	public static void main(String[] args) {
+		SpringApplication.run(RelationalDataAccessApplication.class, args);
+	}
+
+	@Autowired
+	JdbcTemplate jdbcTemplate; // injetando a dependencia do jdbc template (que facilita a codagem)
+
+	@Override // sobrescreve o método run (String... String é quando não se tem o número de Strings)
+	public void run(String... strings) throws Exception {
+
+		log.info("Creating tables"); //para mostrar no log que estamos criando tabelas
+
+		// .execute -> executando querys do JDBC (sem precisar setar o preparedStatment, como podemos ver)
+		jdbcTemplate.execute("DROP TABLE customers IF EXISTS");
+		jdbcTemplate.execute("CREATE TABLE customers(" +
+				"id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
+
+		// aqui estamos criando a lista de objetos que serão usados para adicionar ao banco de dados
+		List<Object[]> splitUpNames = Arrays.asList("John Woo", "Jeff Dean", "Josh Bloch", "Josh Long").stream()
+				.map(name -> name.split(" "))
+				.collect(Collectors.toList());
+
+		// MOstrando na tela todos os customers que setão inseridos
+		splitUpNames.forEach(name -> log.info(String.format("Inserting customer record for %s %s", name[0], name[1])));
+
+		// usado para adicionar coisas no banco de dados em massa
+		jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitUpNames);
+
+		// mostrando em tela tudo que foi criado:
+		log.info("Querying for customer records where first_name = 'Josh':");
+		jdbcTemplate.query(
+						// utilizando o RESULTSET aqui, como podemos ver
+						"SELECT id, first_name, last_name FROM customers WHERE first_name = ?",
+						(rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name")), "Josh")
+				.forEach(customer -> log.info(customer.toString()));
+	}
+
+}
+```
+
 ### PROGRAMA UTILIZANDO RESTFUL 
 [Programa Com Restful](https://spring.io/guides/gs/rest-service)
 Quando queremos comunicar uma aplicação com paginas web, utilizamos o sistema Restful, esse que pode ser incorporado em dois modos: Restful e MVC (no exemplo, com Thimeleaf) o restful retorna um Json e o front e responsavel por o incorporar enquanto o MVC leva uma pagina HTML, o que os diferencia e que o MVC tem uma tcnologia e fica preso a ela, enquanto o restful e o JSON e vc pode utilizar onde quiser.
