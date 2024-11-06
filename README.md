@@ -544,16 +544,44 @@ O Spring automaticamente mapeia a classe greeting para um JSON na hora de enviar
 ### PROGRAMA UTILIZANDO O THIMELEAF 
 [Programa Com Thimeleaf](https://spring.io/guides/gs/handling-form-submission)
 Basicamente, o que tem de diferente e que iremos resolver as solicitacoes enviando um HTML pronto em vez de um Json, basta voce ter um controlador que vai mapear o POST e o GET:
-- ```@Controller```
+- ```@Controller``` -> Quando o elemento que retornará é uma pagina
+- ```@RestController``` -> Quando o elemento que retornará é um JSON ou XML
+  
 - ```@GetMapping(/greeting)```
 - ```@PostMappging(/greeting)```
 voce deve mapear eles em cada classe e recebe um model e retorna a pagina HTML, que deve ter um modelo (classe com os atributos) para retorno:
 ```model.addAtribute(“greeting”, new greeting)```
 
-e nas paginas HTML devem ter o mesmo nome das solicitacoes e sempre terao:
+```java
+@Controller // usado para retornar a pagina
+public class GreetingController {
+
+    @GetMapping("/greeting")
+    public String greetingForm(Model model) { // Model -> Usado para levar os dados do controlador para a view
+        model.addAttribute("greeting", new Greeting()); // deixando o greeting disponível para vizualização no HTML
+        return "greeting"; // retornando a página HTML com a vizualização do elemento
+    }
+
+    @PostMapping("/greeting") // chamado normalmente num formulário
+    public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) { //pega os atributos do formulario e coloca no greeting e no modelo
+        model.addAttribute("greeting", greeting); // adiciona o greeting criado á pagina
+        return "result"; // retorna a pagina HTML com a view do elemento
+    }
+}
+```
+
+e nas paginas HTML (que ficam em resorces/templates) devem ter o mesmo nome das solicitacoes e sempre terao:
+```HTML
+<form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+    <p>Id: <input type="text" th:field="*{id}" /></p>
+    <p>Message: <input type="text" th:field="*{content}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+```
 ```xmls:th=line``` no read e durante todo o HTML terao referencias a pontos que serao mudados dinamicamente pelo thimeleaf, como:
-- ```th:catian=@{/greeting}```
-- ```th.objet=${classe}```
-- ```th.fiel=“*{id}”```
+- ```th:catian=@{/greeting}``` -> mapeia onde a pagina HTML estará
+- ```th.objet=${classe}``` -> mapeia qual a classe que receberá as informações da página
+- ```th.fiel=“*{id}”``` -> fala qual o atributo do objeto associado a essa parte 
+
 
 
