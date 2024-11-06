@@ -526,6 +526,20 @@ para criar o controlador Rest, basta:
 pronto, para chamar a aplicacao basta executar
 - @SpringBootAplication na classe com o main
 - SpringAplication.run(nomeClasse, argumentos); -> na main
+- 
+```
+@RestController
+public class GreetingController {
+    private static final String template = "Hello, %s!"; // apenas setando a string completa
+    private final AtomicLong counter = new AtomicLong(); // versão atômica do tipo Long
+
+    @GetMapping("/greeting") // mapeando para o greeting
+    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return new Greeting(counter.incrementAndGet(), String.format(template, name)); //criando um novo objeto
+    }
+}
+```
+O Spring automaticamente mapeia a classe greeting para um JSON na hora de enviar a repsosata HTTP
 
 ### PROGRAMA UTILIZANDO O THIMELEAF 
 [Programa Com Thimeleaf](https://spring.io/guides/gs/handling-form-submission)
