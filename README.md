@@ -427,6 +427,7 @@ Na pai, em cima do atributo:
 Para rodar uma aplicação Spring com Maven, basta: ``` spring-boot:run```
 
 ### PROGRAMA SIMPLES
+[Programa Simples](https://spring.io/quickstart)
 Para iniciar seu projeto com Spring, basta ir ao site, colocar a versão, dependencias necessárias, etc.
 
 Na assionatura da classe do seu programa para web, deve-se ter:
@@ -444,6 +445,7 @@ Na assionatura da classe do seu programa para web, deve-se ter:
 - http://localhost:8080/hello -> ira rodar a explicação
 
 ### PROGRAMA COM JDBC 
+[Programa Com JDBC](https://spring.io/guides/gs/relational-data-access/)
 Deve-se criar um projeto com a dependencia do JDBC e utlizar 
 - ``` import org.springframework.jdbc.core.JdbcTemplate;``` 
 - ```JdbcTemplate jdbcTemplate;```
@@ -453,6 +455,7 @@ Ele encapsula diversas operações do JDBC, tais como:
 - ```jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitUpNames); ```-> para inserir na tabela
 
 ### PROGRAMA UTILIZANDO RESTFUL 
+[Programa Com Restful](https://spring.io/guides/gs/rest-service)
 Quando queremos comunicar uma aplicação com paginas web, utilizamos o sistema Restful, esse que pode ser incorporado em dois modos: Restful e MVC (no exemplo, com Thimeleaf) o restful retorna um Json e o front e responsavel por o incorporar enquanto o MVC leva uma pagina HTML, o que os diferencia e que o MVC tem uma tcnologia e fica preso a ela, enquanto o restful e o JSON e vc pode utilizar onde quiser.
 
 basicamente, teremos solicitacoes nesse estilo:
@@ -469,6 +472,7 @@ pronto, para chamar a aplicacao basta executar
 - SpringAplication.run(nomeClasse, argumentos); -> na main
 
 ### PROGRAMA UTILIZANDO O THIMELEAF 
+[Programa Com Thimeleaf](https://spring.io/guides/gs/handling-form-submission)
 Basicamente, o que tem de diferente e que iremos resolver as solicitacoes enviando um HTML pronto em vez de um Json, basta voce ter um controlador que vai mapear o POST e o GET:
 - ```@Controller```
 - ```@GetMapping(/greeting)```
