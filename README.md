@@ -53,6 +53,8 @@ A US é um lembrete para a conversa com o cliente.
 Nunca use "usuário", coloque enquanto gerente, enquanto comprador casual, específique seus usuários
 e crie personas.
 
+Personas -> criação para se ter uma ideia melhor das pessoas que seu software atinge 
+
 #### Como saber se uma história de usuário é boa?
 
 INVEST
@@ -92,6 +94,26 @@ DEEP
 - E -> Estimado 
 - E -> Emergente (vai mudando e emergindo a cada checada)
 - P -> Priorizado (o que tem maior prioridade fica no topo, com maior detatlhamento [granulidade]
+
+
+#### Como escrever critérios de aceitação?
+
+Gherking
+- Given (dado)
+- Then (então)
+- When (quando)
+
+DIRETRIZES PARA BOAS HISTÓRIAS: (lembrete para conversa com seu cliente)
+- Comece com as metas de seus usuários
+- Sempre quebre histórias de usuário que passam por todas as camadas (slice the cake)
+- Escrever histórias fechadas em sí (para enchergar o valor)
+- Coloque suas restrições no card
+- Olhe ao horizonte (nao pense MUITO longe, implementar daqui 2 anos)
+- Não detalhe UI
+- Nem sempre usar US, as vezes um caso de uso
+- Coloque o papel do usuário no seu requisito (não coloca só usuário)
+- Não fique colocando muito plural
+- A conversa é mais importante que o documento
 
 Definição de PRONTO -> Sempre bom ser no estilo (slice the cake -> pega a interface, o código e o banco de dados)
 
