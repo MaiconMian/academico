@@ -1,0 +1,60 @@
+.stat-item {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.stat-item span {
+    color: rgb(238, 238, 238);
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%; 
+    height: 100%; 
+    margin: auto;
+    overflow: hidden;
+    border-radius: 10px; 
+}
+
+.carousel {
+    display: flex;
+    width: 100%; 
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.6); /* Cor de fundo mais clara */
+    color: #333;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+    border-radius: 5%;
+    transition: background-color 0.3s ease;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Cor mais forte ao passar o mouse */
+}

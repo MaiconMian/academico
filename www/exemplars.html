@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Exemplars</h2>
+                    <p>Exemplars for movies in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAddExemplar" class="btn btn-success mb-3"> + Add Exemplar</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name of movie</th>
+                            <th>Date of buy</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select the ID of copies of the film How to Lose a Guy in 10 Days that have not yet been paid for
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT e.id FROM borrowings b JOIN borrowing_exemplar be ON b.id = be.fk_borrowing JOIN exemplar e ON be.fk_exemplar = e.id JOIN movies m ON e.fk_movie = m.id WHERE m.movie_name = 'How to Lose a Guy in 10 Days' AND e.id IN (SELECT e.id FROM borrowings b JOIN borrowing_exemplar be ON b.id = be.fk_borrowing WHERE b.borrowing_is_paid = FALSE) GROUP BY e.id </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Return all purchased copies in June 2023 or November 2023
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">(SELECT fk_movie, exemplar_buy_date FROM exemplar WHERE exemplar_buy_date BETWEEN '2023-06-01' AND '2023-06-30') UNION (SELECT fk_movie, exemplar_buy_date FROM exemplar WHERE exemplar_buy_date BETWEEN '2023-11-01' AND '2023-11-30') </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Exemplar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <input type="hidden" id="editExemplarId">
+                        <div class="form-group">
+                            <label for="editMovieId">Movie</label>
+                            <select id="editMovieId" class="form-control" required>
+                                <option value="">Select Movie</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editExemplarBuyDate">Exemplar Buy Date</label>
+                            <input type="date" id="editExemplarBuyDate" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/exemplars.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+
+</body>
+</html>

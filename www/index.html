@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/carrossel.css">
+    
+</head>
+<body>
+    
+    <div id="sideBar"></div>
+
+    <div class="container my-4 container-center text-left">
+        <h2> Welcome to Family Video! </h2>
+        <p> Where Movies Bring Us Together!</p>
+    </div>
+
+    <div class="container estatisticas">
+        
+        <div class="top-container">
+            <div class="top-left">
+                <div class="carousel-container">
+                    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                    <div class="carousel">
+                        <img src="assets/images/Imagem1.jpeg" alt="Imagem 1">
+                        <img src="assets/images/Imagem2.jpg" alt="Imagem 2">
+                        <img src="assets/images/imagem3.jpg" alt="Imagem 3">
+                        <img src="assets/images/imagem4.jpg" alt="Imagem 4">
+                    </div>
+                    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+                </div>
+            </div>
+    
+            <div class="top-right">
+                <h3>Statistics</h3>
+                <div class="stat-item">
+                    Movies: <span id="movies-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Actors: <span id="actors-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Directors: <span id="directors-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Genres: <span id="genres-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Classifications: <span id="classifications-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Sections: <span id="sections-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Clients: <span id="clients-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Employees: <span id="employees-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Exemplars: <span id="exemplars-count">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Borrowings: <span id="borrowings-count">Loading...</span>
+                </div>
+                
+            </div>
+        </div>
+    
+        <div class="bottom-container">
+            <p> Work for the Database course | Professor: Mariane Moreira | Students: Maicon M, Pedro B, Nycole P, Gustavo R, Caio H, Leonardo A </
+    </div>
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script>
+        
+        function updateStats(endpoint, elementId) {
+                fetch(endpoint)
+                .then(response => response.json()) 
+                .then(data => {
+                    const count = data.length; 
+                    document.getElementById(elementId).textContent = count; 
+                })
+                .catch(error => {
+                    console.error(`Error fetching data from ${endpoint}:`, error);
+                    document.getElementById(elementId).textContent = 'Error';
+                });
+        }
+
+        updateStats('http://localhost:8090/api/v1/movies', 'movies-count');
+        updateStats('http://localhost:8090/api/v1/actors', 'actors-count');
+        updateStats('http://localhost:8090/api/v1/directors', 'directors-count');
+        updateStats('http://localhost:8090/api/v1/genres', 'genres-count');
+        updateStats('http://localhost:8090/api/v1/classifications', 'classifications-count');
+        updateStats('http://localhost:8090/api/v1/sections', 'sections-count');
+        updateStats('http://localhost:8090/api/v1/clients', 'clients-count');
+        updateStats('http://localhost:8090/api/v1/employees', 'employees-count');
+        updateStats('http://localhost:8090/api/v1/exemplars', 'exemplars-count');
+        updateStats('http://localhost:8090/api/v1/borrowings', 'borrowings-count');
+
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel img');
+        const totalSlides = slides.length;
+        let autoSlideInterval; 
+
+        function moveSlide(direction) {
+            currentIndex += direction;
+
+            if (currentIndex < 0) {
+                currentIndex = totalSlides - 1; 
+            }
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0; 
+            }
+
+            const carousel = document.querySelector('.carousel');
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+            resetAutoSlide(); 
+        }
+
+        function autoMoveSlide() {
+            moveSlide(1);
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(autoMoveSlide, 2000); 
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval); 
+            startAutoSlide(); 
+        }
+
+        startAutoSlide();
+
+        document.querySelector('.prev-button').addEventListener('click', () => moveSlide(-1));
+        document.querySelector('.next-button').addEventListener('click', () => moveSlide(1));
+
+
+    </script>
+    
+</body>
+</html>

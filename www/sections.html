@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Sections</h2>
+                    <p>Sections in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAddSection" class="btn btn-success mb-3"> + Add Section</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Classifications</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead><tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select the section that has more film than all the others or the one that has the most loans
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">(SELECT s.section_name FROM sections s JOIN classifications c ON s.fk_classification = c.id JOIN movies m ON m.fk_classification = c.id GROUP BY s.id HAVING COUNT(m.id) > ALL (SELECT COUNT(m.id) FROM sections s2 JOIN classifications c ON s2.fk_classification = c.id JOIN movies m ON m.fk_classification = c.id WHERE s2.id <> s.id GROUP BY s2.id)) UNION (SELECT s.section_name FROM borrowing_exemplar b JOIN exemplar e ON b.fk_exemplar = e.id JOIN movies m ON e.fk_movie = m.id JOIN classifications c ON c.id = m.fk_classification JOIN sections s ON s.fk_classification = c.id GROUP BY s.id, s.section_name HAVING COUNT(b.fk_borrowing) > ALL (SELECT COUNT(b2.fk_borrowing) FROM borrowing_exemplar b2 JOIN exemplar e2 ON b2.fk_exemplar = e2.id JOIN movies m2 ON e2.fk_movie = m2.id JOIN classifications c2 ON c2.id = m2.fk_classification JOIN sections s2 ON s2.fk_classification = c2.id WHERE s2.id <> s.id GROUP BY s2.id)) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Select the genres for the afternoon session ordered by the number of films in each one
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT g.genre_name FROM sections s JOIN classifications c ON s.fk_classification = c.id JOIN movies m ON c.id = m.fk_classification JOIN genres_movies gm ON m.id = gm.fk_movie JOIN genres g ON gm.fk_genre = g.id WHERE s.section_name = 'Afternoon Favorites' GROUP BY g.id ORDER BY COUNT(g.id) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="3">
+                            Select which section has the highest number of employees
+                        </button>
+                        <div id="tabela-3" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT s.section_name, COUNT(e.id) AS total_employees FROM sections s JOIN employees e ON s.id = e.fk_section GROUP BY s.section_name HAVING COUNT(e.id) >= ALL (SELECT COUNT(e2.id) FROM sections s2 JOIN employees e2 ON s2.id = e2.fk_section GROUP BY s2.section_name)</p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Section</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <input type="hidden" id="editSectionId">
+                        <div class="form-group">
+                            <label for="editSectionName">Section Name</label>
+                            <input type="text" id="editSectionName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editSectionDescription">Section Description</label>
+                            <input type="text" id="editSectionDescription" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editClassificationId">Classification</label>
+                            <select id="editClassificationId" class="form-control" required>
+                                <option value="">Select Classification</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/sections.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+
+</body>
+</html>

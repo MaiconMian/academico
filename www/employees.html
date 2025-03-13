@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Employees</h2>
+                    <p>Employees for movies in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAddEmployee" class="btn btn-success mb-3"> + Add Employe</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Last Lame</th>
+                            <th>Section</th>
+                            <th>Salary</th>
+                            <th>Birthay Date</th>
+                            <th>Street</th>
+                            <th>Number</th>
+                            <th>Postal Code</th>
+                            <th>City</th>
+                            <th>Contry</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select the name of the employee who earns more than everyone else
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT e.employee_name FROM employees e WHERE e.employee_salary > ALL (SELECT e2.employee_salary FROM employees e2 WHERE e.id <> e2.id) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Select employees who belong to section 1 or section 2
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">(SELECT id, employee_name, employee_last_name FROM employees WHERE fk_section = 1) UNION (SELECT id, employee_name, employee_last_name FROM employees WHERE fk_section = 2) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="3">
+                            Select all employees whose birthdays are in winter or summer
+                        </button>
+                        <div id="tabela-3" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT id, employee_name, employee_last_name, employee_birthday_date FROM employees WHERE MONTH(employee_birthday_date) IN (12, 1, 2) UNION (SELECT id, employee_name, employee_last_name, employee_birthday_date FROM employees WHERE MONTH(employee_birthday_date) IN (6, 7, 8)) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <input type="hidden" id="editEmployeeId">
+                        <div class="form-group">
+                            <label for="editEmployeeName">Employee Name</label>
+                            <input type="text" id="editEmployeeName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editSectionId">Section</label>
+                            <select id="editSectionId" class="form-control" required>
+                            </select>
+                        </div>                        
+                        <div class="form-group">
+                            <label for="editEmployeeLastName">Employee Last Name</label>
+                            <input type="text" id="editEmployeeLastName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmployeeSalary">Salary</label>
+                            <input type="number" id="editEmployeeSalary" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmployeeBirthdayDate">Birthday Date</label>
+                            <input type="date" id="editEmployeeBirthdayDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddressStreet">Street</label>
+                            <input type="text" id="editAddressStreet" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddressNumber">Number</label>
+                            <input type="number" id="editAddressNumber" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddressPostalCode">Postal Code</label>
+                            <input type="text" id="editAddressPostalCode" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddressCity">City</label>
+                            <input type="text" id="editAddressCity" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAddressCountry">Country</label>
+                            <input type="text" id="editAddressCountry" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/employees.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+    
+</body>
+</html>

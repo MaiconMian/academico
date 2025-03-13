@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${SPRING_PORT}:8090
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    networks:
+      - springboot-mysql-network
+  
+  mysqldb:
+    image: mysql:8.0.33
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      - MYSQL_DATABASE=familyvideo
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --init-file=/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - springboot-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  http-server:
+    image: nginx:alpine
+    ports:
+      - ${NGINX_PORT}:80
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+    networks:
+      - springboot-mysql-network
+    depends_on:
+      - app
+
+volumes:
+  mysql-data:
+
+networks:
+  springboot-mysql-network:
+    name: springboot-mysql-network

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Movies</h2>
+                    <p>Movies in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAdd10Movie" class="btn btn-success mb-3"> Add 10 Movies</button>
+                <button type="button" id="btnUpdt10Movie" class="btn btn-success mb-3"> Upt 10 Movies</button>
+                <button type="button" id="btnDel10Movie" class="btn btn-success mb-3"> Del 10 Movies</button>
+                <button type="button" id="btnAddMovie" class="btn btn-success mb-3"> + Add Movie</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Movie name</th>
+                            <th>Synopsis</th>
+                            <th>Release Year</th>
+                            <th>Classification</th>
+                            <th>Director</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead><tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select all films that feature actors under 25
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT DISTINCT m.movie_name AS Nome_do_Filme FROM movies m JOIN movies_actors ma ON m.id = ma.fk_movie JOIN actors a ON ma.fk_actors = a.id WHERE TIMESTAMPDIFF(YEAR, a.actor_birthday_date, CURDATE()) < 25 ORDER BY Nome_do_Filme ASC </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Select the name and number of times a movie was borrowing in 2023
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT m.movie_name, COUNT(m.id) as number_borrowings FROM borrowings b JOIN borrowing_exemplar be ON b.id = be.fk_borrowing JOIN exemplar e ON be.fk_exemplar = e.id JOIN movies m ON e.fk_movie = m.id WHERE YEAR(b.borrowing_sale_date) = 2023 GROUP BY m.id </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="3">
+                            Select the number of films rented that the classification is greater than 12
+                        </button>
+                        <div id="tabela-3" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT m.movie_name AS Nome_do_Filme, COUNT(b.id) AS Total_Alugueis FROM movies m JOIN classifications c ON m.fk_classification = c.id JOIN exemplar e ON m.id = e.fk_movie JOIN borrowing_exemplar be ON e.id = be.fk_exemplar JOIN borrowings b ON be.fk_borrowing = b.id WHERE c.classification_age > 12 GROUP BY m.id, m.movie_name ORDER BY Total_Alugueis DESC </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="4">
+                            Select films, their genres and their borrowings
+                        </button>
+                        <div id="tabela-4" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block"> SELECT m.movie_name, GROUP_CONCAT(g.genre_name) AS genres, c.classification_name FROM movies m JOIN genres_movies gm ON gm.fk_movie = m.id JOIN genres g ON gm.fk_genre = g.id JOIN classifications c ON m.fk_classification = c.id GROUP BY m.id, c.id ORDER BY m.movie_name</p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="5">
+                            Select films that have more genres than any other and that have more than one copy
+                        </button>
+                        <div id="tabela-5" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT m.movie_name, COUNT(e.id) AS total_exemplars, (SELECT COUNT(g.id) FROM genres_movies gm JOIN genres g ON gm.fk_genre = g.id WHERE gm.fk_movie = m.id) AS total_genres FROM movies m JOIN exemplar e ON m.id = e.fk_movie GROUP BY m.id HAVING COUNT(e.id) > SOME (SELECT COUNT(e2.id) FROM exemplar e2 GROUP BY e2.fk_movie) AND (SELECT COUNT(g.id) FROM genres_movies gm JOIN genres g ON gm.fk_genre = g.id WHERE gm.fk_movie = m.id) > 1</p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Movie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <input type="hidden" id="editMovieId">
+                        <div class="form-group">
+                            <label for="editMovieName">Movie Name</label>
+                            <input type="text" id="editMovieName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMovieSynopsis">Movie Synopsis</label>
+                            <textarea id="editMovieSynopsis" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editReleaseYear">Release Year</label>
+                            <input type="number" id="editReleaseYear" class="form-control" min="1900" max="2099" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editClassificationId">Classification</label>
+                            <select id="editClassificationId" class="form-control" required>
+                                <option value="">Select Classification</option>
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDirectorId">Director</label>
+                            <select id="editDirectorId" class="form-control" required>
+                                <option value="">Select Director</option>
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editGenreId">Genres</label>
+                            <select id="editGenreId" class="form-control" multiple required>
+                                <!-- Options for genres will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editActorId">Actors</label>
+                            <select id="editActorId" class="form-control" multiple required>
+                                <!-- Options for actors will be populated dynamically -->
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>       
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/movies.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+
+    <script>
+        // Função para salvar estados no localStorage
+        function saveButtonStates(states) {
+            localStorage.setItem('buttonStates', JSON.stringify(states));
+        }
+    
+        // Função para carregar estados do localStorage
+        function loadButtonStates() {
+            const states = localStorage.getItem('buttonStates');
+            return states ? JSON.parse(states) : { btnAdd10Movie: false, btnUpdt10Movie: true, btnDel10Movie: true };
+        }
+    
+        // Função para aplicar os estados dos botões
+        function applyButtonStates(states) {
+            const btnAdd10Movie = document.getElementById('btnAdd10Movie');
+            const btnUpdt10Movie = document.getElementById('btnUpdt10Movie');
+            const btnDel10Movie = document.getElementById('btnDel10Movie');
+
+            btnAdd10Movie.disabled = states.btnAdd10Movie;
+            btnUpdt10Movie.disabled = states.btnUpdt10Movie;
+            btnDel10Movie.disabled = states.btnDel10Movie;
+
+            // Ajustando as classes visualmente
+            btnAdd10Movie.className = states.btnAdd10Movie ? "btn btn-secondary mb-3" : "btn btn-success mb-3";
+            btnUpdt10Movie.className = states.btnUpdt10Movie ? "btn btn-secondary mb-3" : "btn btn-success mb-3";
+            btnDel10Movie.className = states.btnDel10Movie ? "btn btn-secondary mb-3" : "btn btn-success mb-3";
+}
+    
+        // Carrega e aplica os estados dos botões ao carregar a página
+        window.onload = () => {
+            const states = loadButtonStates();
+            applyButtonStates(states);
+        };
+    
+        // Função para atualizar os estados dos botões dinamicamente
+        function updateButtonStates(buttonId) {
+            const states = loadButtonStates();
+    
+            if (buttonId === 'btnAdd10Movie') {
+                states.btnAdd10Movie = true;
+                states.btnUpdt10Movie = false;
+                states.btnDel10Movie = false;
+            } else if (buttonId === 'btnDel10Movie') {
+                states.btnAdd10Movie = false;
+                states.btnUpdt10Movie = true;
+                states.btnDel10Movie = true;
+            }
+    
+            saveButtonStates(states);
+            applyButtonStates(states);
+        }
+    
+        // Função para chamar o endpoint e recarregar a página
+        function callEndpoint(url, method, buttonId) {
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert(`Endpoint '${url}' chamado com sucesso!`);
+                updateButtonStates(buttonId); // Atualiza estados após sucesso
+                location.reload(); // Atualiza a página automaticamente
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(`Erro ao chamar o endpoint '${url}': ${error.message}`);
+            });
+        }
+    
+        document.getElementById('btnAdd10Movie').addEventListener('click', () => {
+            callEndpoint('http://localhost:8090/api/v1/populate', 'POST', 'btnAdd10Movie');
+        });
+    
+        document.getElementById('btnUpdt10Movie').addEventListener('click', () => {
+            callEndpoint('http://localhost:8090/api/v1/populate', 'PUT', 'btnUpdt10Movie');
+        });
+    
+        document.getElementById('btnDel10Movie').addEventListener('click', () => {
+            callEndpoint('http://localhost:8090/api/v1/populate', 'DELETE', 'btnDel10Movie');
+        });
+    </script>    
+    
+</body>
+</html>

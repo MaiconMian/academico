@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Directors</h2>
+                    <p>Directors for movies in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAddDirector" class="btn btn-success mb-3"> + Add Director</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select all directors and which sections they are in
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block"> SELECT d.director_name, d.director_last_name, s.section_name, s.section_description FROM directors d JOIN movies m ON d.id = m.fk_director JOIN classifications c ON m.fk_classification = c.id JOIN sections s ON s.fk_classification = c.id GROUP BY d.id, s.id ORDER BY d.director_last_name, d.director_name, s.section_name </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Select the director that starts with 'H' and has had a film rented
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT DISTINCT d.director_name, d.director_last_name FROM directors d JOIN movies m ON d.id = m.fk_director JOIN exemplar e ON e.fk_movie = m.id JOIN borrowing_exemplar be ON e.id = be.fk_exemplar JOIN borrowings b ON be.fk_borrowing = b.id WHERE d.director_name LIKE 'H%' ORDER BY d.director_name, d.director_last_name </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="3">
+                            Select directors and the number of films rented from them
+                        </button>
+                        <div id="tabela-3" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT d.director_name, d.director_last_name, COUNT(be.fk_borrowing) AS total_borrowings FROM directors d INNER JOIN movies m ON d.id = m.fk_director INNER JOIN exemplar e ON m.id = e.fk_movie INNER JOIN borrowing_exemplar be ON e.id = be.fk_exemplar GROUP BY d.id ORDER BY total_borrowings DESC </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="4">
+                            Select the director who directed a film that starts with the letter 'D' and was released in the year 2016
+                        </button>
+                        <div id="tabela-4" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT d.director_name, d.director_last_name FROM directors d JOIN movies m ON m.fk_director = d.id WHERE m.movie_name LIKE 'L%' AND m.id IN (SELECT m.id FROM movies m WHERE m.movie_release_year = 2016) </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Director</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <!-- Hidden field for the Director ID -->
+                        <input type="hidden" id="editDirectorId"> 
+    
+                        <!-- Director Name -->
+                        <div class="form-group">
+                            <label for="editDirectorName">Director Name</label>
+                            <input type="text" id="editDirectorName" class="form-control" required>
+                        </div>
+    
+                        <!-- Director Last Name -->
+                        <div class="form-group">
+                            <label for="editDirectorLastName">Director Last Name</label>
+                            <input type="text" id="editDirectorLastName" class="form-control" required>
+                        </div>
+    
+                        <!-- Director Description -->
+                        <div class="form-group">
+                            <label for="editDirectorDescription">Director Description</label>
+                            <textarea id="editDirectorDescription" class="form-control" required></textarea>
+                        </div>
+    
+                        <!-- Save Button -->
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/directors.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Video</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+</head>
+<body>
+    <div id="sideBar"></div>
+
+    <div id="mainContainer">
+        <div class="container my-4 container-center text-left">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2>Borrowings</h2>
+                    <p>Borrowings for clients in FamilyVideo</p>
+                </div>
+                <button type="button" id="btnAddBorrowing" class="btn btn-success mb-3"> + Add Borrowing</button>
+            </div>
+        </div>
+
+        <div class="container my-4">
+            <div class="table-responsive">
+                <table id="genres" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client Name</th>
+                            <th>Employe Name</th>
+                            <th>Is paid?</th>
+                            <th>Date</th>
+                            <th>Devolution Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container my-4" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <div class="d-flex justify-content-center mb-3">
+                <button id="main-toggler" class="bt-select-queria w-100 text-white rounded-pill">
+                    Select Query Type
+                </button>
+            </div>
+    
+            <div id="query-section" class="container-fluid my-4" style="display: none; padding: 0;">
+                <div class="list-group">
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="1">
+                            Select the year with the highest number of copies borrowing
+                        </button>
+                        <div id="tabela-1" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT YEAR(b.borrowing_sale_date) AS year, COUNT(be.fk_exemplar) AS total_movies_borrowed FROM borrowings b INNER JOIN borrowing_exemplar be ON b.id = be.fk_borrowing GROUP BY YEAR(b.borrowing_sale_date) ORDER BY total_movies_borrowed DESC LIMIT 1  </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+        
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="2">
+                            Select the film genres that have the most unpaid loans
+                        </button>
+                        <div id="tabela-2" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT g.genre_name, COUNT(be.fk_borrowing) AS unpaid_borrowings FROM genres g INNER JOIN genres_movies gm ON g.id = gm.fk_genre INNER JOIN movies m ON gm.fk_movie = m.id INNER JOIN exemplar e ON m.id = e.fk_movie INNER JOIN borrowing_exemplar be ON e.id = be.fk_exemplar INNER JOIN borrowings b ON be.fk_borrowing = b.id WHERE b.borrowing_is_paid = FALSE GROUP BY g.id ORDER BY unpaid_borrowings DESC </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="query-item mb-3">
+                        <button class="list-group-item toggler-btn rounded-pill w-100 text-center" data-type="3">
+                            Select the loan that has been unpaid for the longest time
+                        </button>
+                        <div id="tabela-3" class="toggler-content" style="display: none; animation: slideDown 0.5s ease;">
+                            <p class="code-block">SELECT b.id AS borrowing_id, c.client_name, c.client_last_name, b.borrowing_sale_date, b.borrowing_devolution_date, DATEDIFF(CURRENT_DATE, b.borrowing_devolution_date) AS overdue_days FROM borrowings b JOIN clients c ON b.fk_client = c.id WHERE b.borrowing_is_paid = FALSE ORDER BY overdue_days DESC LIMIT 1 </p>
+                            <table class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Add or Edit Borrowing</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="editError" class="alert alert-danger" style="display: none;"></div>
+                    <form id="editForm">
+                        <input type="hidden" id="editBorrowingId">
+                        <div class="form-group">
+                            <label for="editClientId">Client</label>
+                            <select id="editClientId" class="form-control" required>
+                                <option value="">Select Client</option>
+                                <!-- Options for clients will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editExemplarId">Exemplar</label>
+                            <select id="editExemplarId" class="form-control" multiple required>
+                                <option value="">Select Exemplar</option>
+                                <!-- Options for exemplars will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmployeeId">Employee</label>
+                            <select id="editEmployeeId" class="form-control" required>
+                                <option value="">Select Employee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editStartDate">Start Date</label>
+                            <input type="date" id="editStartDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editReturnDate">Return Date</label>
+                            <input type="date" id="editReturnDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIsPaid">Is Paid</label>
+                            <input type="checkbox" id="editIsPaid" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+    </div>
+     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/borrowings.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+    <script src="assets/js/query.js"></script>
+    <script src="assets/js/deleteModal.js"></script>
+</body>
+</html>
