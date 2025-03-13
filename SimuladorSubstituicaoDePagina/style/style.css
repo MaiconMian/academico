@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.scroll-container {
+    border-radius: 10px;
+    max-width: 100%; 
+    height: 65px; 
+    overflow-x: auto;
+    overflow-y: hidden; 
+    white-space: nowrap; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    box-sizing: border-box; 
+}
+
+.item {
+    display: inline-block; 
+    background-color: #007bff;
+    border: 1px solid #ffffff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+    min-width: 100px; 
+    text-align: center;
+}
+
+ .botaoParar.disabled, .botaoSimples.disabled{
+    background-color: gray; 
+    color: lightgray; 
+    cursor: not-allowed; 
+}
+
+#LinhaDoTempo {
+    font-family: Arial, sans-serif; 
+    font-size: 16px; 
+    color: #333; 
+    padding: 10px; 
+    background-color: #f9f9f9; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    max-height: 300px; 
+    overflow-y: auto;
+}
+
+.linha-saida {
+    margin-bottom: 8px; 
+    padding: 5px; 
+    border-bottom: 1px solid #ddd; 
+}
+
+.primeirocontainer {
+    margin-top: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.entry {
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.botaoSimples {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botaoParar {
+    background-color: #ff0000;
+    color: white;
+    padding: 5px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.divBorda{
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+
+

@@ -1,0 +1,71 @@
+<!--
++-------------------------------------------------------------+
+| UNIFAL – Universidade Federal de Alfenas.                    |
+| BACHARELADO EM CIENCIA DA COMPUTACAO.                        |
+| Trabalho..: Algoritmo de Substituição de página              |
+| Disciplina: Sistemas Operacionais                            |
+| Professor.: Fellipe Rey                                      |
+| Aluno(s): Maicon Almeida Mian 2023.1.08.013                  |
++-------------------------------------------------------------+
+-->
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substituição de página</title>
+    <link rel = "stylesheet" type="text/css" href="style/style.css">
+</head>
+<body> 
+
+    <h2>Substituição de Página</h2>
+
+    <p style="font-size: 13px;"> Por: Maicon Almeida Mian (RA:2023.1.08.013) | Sistemas Operacionais [DCE131] | Professor: Fellipe Rey</p>
+
+    <h3> Entradas </h3>
+    <div class="divBorda">
+        
+        <div class="primeirocontainer">
+            <label for="tamanhoMemoria" class="label">Tamanho da Memória: </label>
+            <input type="number" id="tamanhoMemoria" class="entry" placeholder="Digite o tamanho">
+            <button onclick="iniciaMemoria()" id="botaoIniciaMemoria" class="botaoSimples">INICIA MEMÓRIA</button>
+        </div>
+        
+        
+        <div class="container">
+                <label for="tamanhoMemoria" class="label">Criação de Processo: </label>
+                <label for="tamanhoMemoria" class="label">Tamanho: </label>
+                <input type="number" id="tamanhoProcesso" class="entry" placeholder="Tamanho do Processo">
+                <label for="tamanhoMemoria" class="label">U.t de entrada:</label>
+                <input type="number" id="horaEntrar" class="entry" placeholder="U.t de entrada">
+                <button onclick="criaProcesso()" id="botaoCriaProcesso" class="botaoSimples">CRIAR</button>
+        </div>
+        
+        <div class="container">
+            
+            <label for="criarProcessoAleatorio" style="cursor: pointer;" class="label">
+                Criar processos aleatoriamente?
+                <input type="checkbox" id="criarProcessoAleatorio" class="Checkbox" style="margin-right: 5px;">
+            </label>
+        </div>    
+    
+        <div class="container">
+            <button onclick="inicia()" id="botaoInicia" class="botaoSimples"> INICIAR </button>
+            <button onclick="parar()" id="botaoPara" class="botaoParar disabled" disabled> PARAR </button>
+        </div>
+
+    </div>    
+    
+
+    <h2>Lista de processos que entrarão</h2>
+    <div class="scroll-container" id="processosPendentes"></div>
+
+    <h2>Linha do tempo de execução</h2>
+    <div id="LinhaDoTempo"></div>
+
+    <script src="scripts/MRU.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/Processo.js"></script>
+    <script src="scripts/view.js"></script>
+
+</body>
