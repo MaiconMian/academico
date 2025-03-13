@@ -35,8 +35,12 @@ Cada disciplina tem sua própria branch, para que agrupar os trabalhos de cada u
 |  02/2023  |[AEDS2](https://github.com/MaiconMian/academico/tree/AEDS2)| [![My Skills](https://skillicons.dev/icons?i=c)](https://skillicons.dev) |
 |  03/2024  |[AEDS3](https://github.com/MaiconMian/academico/tree/AEDS3)| [![My Skills](https://skillicons.dev/icons?i=c,python)](https://skillicons.dev)|
 |  03/2024  |[Orientação a Objetos](https://github.com/MaiconMian/academico/tree/OrientacaoAObjetos)|[![My Skills](https://skillicons.dev/icons?i=java,python)](https://skillicons.dev)|
+|  03/2024  |[Prolog](https://github.com/MaiconMian/academico/tree/prolog)| [![My Skills](https://skillicons.dev/icons?i=PROLOG)](https://skillicons.dev)|
 |  04/2024  |[Sistemas Operacionais](https://github.com/MaiconMian/academico/tree/SistemasOperacionais)|[![My Skills](https://skillicons.dev/icons?i=js,html,css)](https://skillicons.dev)|
-|  -  |[Projetos Paralelos](https://github.com/MaiconMian/academico/tree/projetos_paralelos)|[![My Skills](https://skillicons.dev/icons?i=python)](https://skillicons.dev)|
+|  04/2024  |[Gestão do C. V. da Aplicação](https://github.com/MaiconMian/academico/tree/gestao)|[![My Skills](https://skillicons.dev/icons?i=java,spring,docker,jquery,bootstrap)](https://skillicons.dev)|
+|  04/2024  |[Compiladores](https://github.com/MaiconMian/academico/tree/compiladores)|[![My Skills](https://skillicons.dev/icons?i=c)](https://skillicons.dev)|
+|  04/2024  |[Banco de Dados](https://github.com/MaiconMian/academico/tree/banco_de_dados)|[![My Skills](https://skillicons.dev/icons?i=mysql)](https://skillicons.dev)|
+|  -  |[Projetos Paralelos](https://github.com/MaiconMian/academico/tree/projetos_paralelos)|[![My Skills](https://skillicons.dev/icons?i=python,html,css,js)](https://skillicons.dev)|
 
 ## 🤝 Colaboradores
 Durante cada trabalho, tive que fazer os trabalhos sozinho ou em grupo. Os projetos em grupo terão os contribuintes e o que foi de minha autoria em cada trabalho.
