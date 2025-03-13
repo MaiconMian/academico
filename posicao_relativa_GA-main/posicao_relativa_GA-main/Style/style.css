@@ -1,0 +1,70 @@
+ 
+    body{
+        background: black;
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h1, #Reta, #Plano{
+        color: white;
+    }
+
+    .tipo, .ComponentesVetor{
+        color: white;
+    }
+        
+    .PrimeiraReta label, .SegundaReta label, .PrimeiroPlano label, .SegundoPlano label {
+        color: white;
+    }
+
+    .Entrada, #camposPlanoPlano, #CamposRetaPlano{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+    .Baixo{
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+    }
+
+    .entry{
+        border-radius: 10px;
+        border: none;
+        margin: 1px;
+        font-size: 30px;
+        max-width: 80px; 
+        min-width: 30px; 
+    }
+
+    .entry::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .Saida{
+        display: flex;
+        align-items: center;
+        margin: 30px;
+        color: white;
+        font-size: 40px;
+        max-width: 400px;
+    }
+
+    .Retas{
+        align-items: center;
+    }
+
+    #soma, #PlanoCalcular{
+        border-radius: 20px;
+        border: none;
+        width: 200px;
+        height: 50px;
+        cursor: pointer;
+        align-items: center;
+        font-size: 20px;
+        margin: 20px;
+    }

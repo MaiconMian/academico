@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distancias Geometria Analítica</title>
+    <link rel = "stylesheet" type="text/css" href="Style/style.css">
+</head>
+<body>
+    <h1> POSIÇÃO RELATIVA ENTRE RETAS E PLANOS </h1>
+
+    <label for="tipo" class="tipo">Selecione o tipo de comparação:</label>
+        <select id="tipo" onchange="mostrarCampos()">
+            <option value="retaReta" selected>Reta - Reta</option>
+            <option value="retaPlano">Reta - Plano</option>
+            <option value="planoPlano">Plano - Plano</option>
+    </select>
+
+    <div id ="camposRetaReta" class ="Retas" style="display: block;" >
+        <div class="Entrada">
+            <p id="Reta">Reta 01</p>
+            <div class="PrimeiraReta">
+                <input type="text" id="X" placeholder="X" class="entry">
+                <input type="text" id="Y" placeholder="Y" class="entry">
+                <input type="text" id="Z" placeholder="Z" class="entry">
+                <label for="+">+ &alpha;  </label>
+                <input type="text" id="A" placeholder="A" class="entry">
+                <input type="text" id="B" placeholder="B" class="entry">
+                <input type="text" id="C" placeholder="C" class="entry">
+            </div>
+            
+            <p id="Reta">Reta 02</p>
+            <div class="PrimeiraReta">
+                <input type="text" id="X_" placeholder="X" class="entry">
+                <input type="text" id="Y_" placeholder="Y" class="entry">
+                <input type="text" id="Z_" placeholder="Z" class="entry">
+                <label for="+">+ &beta;  </label>
+                <input type="text" id="A_" placeholder="A" class="entry">
+                <input type="text" id="B_" placeholder="B" class="entry">
+                <input type="text" id="C_" placeholder="C" class="entry">
+            </div>
+        </div>
+        <div class="Baixo">
+            <div class="botoes">
+                <button id="soma" onclick="calcularRetas()">
+                    Calcular
+                </button>
+            </div>
+            <div class="Saida">
+                <output id="output"> Resultado </output>
+            </div>
+        </div>
+    </div>
+    <div id ="camposPlanoReta" class ="PlanoReta" style="display: none;">
+        <div class="Entrada">
+            <p id="Reta">Reta</p>
+            <div class="PrimeiraReta">
+                <input type="text" id="XPlano" placeholder="X" class="entry">
+                <input type="text" id="YPlano" placeholder="Y" class="entry">
+                <input type="text" id="ZPlano" placeholder="Z" class="entry">
+                <label for="+">+ &alpha;  </label>
+                <input type="text" id="APlano" placeholder="A" class="entry">
+                <input type="text" id="BPlano" placeholder="B" class="entry">
+                <input type="text" id="CPlano" placeholder="C" class="entry">
+            </div>
+            
+            <p id="Reta">Plano</p>
+            <div class="PrimeiraReta">
+                <input type="text" id="X_Plano" placeholder="X" class="entry">
+                <input type="text" id="Y_Plano" placeholder="Y" class="entry">
+                <input type="text" id="Z_Plano" placeholder="Z" class="entry">
+                <label for="+">+ &beta;  </label>
+                <input type="text" id="A_Plano" placeholder="A" class="entry">
+                <input type="text" id="B_Plano" placeholder="B" class="entry">
+                <input type="text" id="C_Plano" placeholder="C" class="entry">
+                <label for="+">+ &gamma;  </label>
+                <input type="text" id="EPlano" placeholder="E" class="entry">
+                <input type="text" id="FPlano" placeholder="F" class="entry">
+                <input type="text" id="GPlano" placeholder="G" class="entry">
+            </div>
+        </div>
+
+        <div class = "Baixo">
+            <div class="botoes">
+                <button id="PlanoCalcular" onclick="calcularRetaPlano()">
+                    Calcular
+                </button>
+            </div>
+            
+            <div class="Saida">
+                <output id="outputPlanoReta"> Resultado </output>
+            </div>
+        </div>
+    </div>
+    <div id ="camposPlanoPlano" class ="Planos" style="display: none;">
+        <div class="Entrada">
+            <p id="Plano">Plano 01 </p>
+            <div class="PrimeiroPlano">
+                <input type="text" id="a" placeholder="a" class="entry">
+                <label for="x">x + </label>
+                <input type="text" id="b" placeholder="b" class="entry">
+                <label for="x">y + </label>
+                <input type="text" id="c" placeholder="c" class="entry">
+                <label for="x">z + </label>
+                <input type="text" id="d" placeholder="d" class="entry">
+                <label for="x">= 0 </label>
+            </div>
+            
+            <p id="Plano">Plano 02</p>
+            <div class="PrimeiroPlano">
+                <input type="text" id="a_" placeholder="a" class="entry">
+                <label for="x">x + </label>
+                <input type="text" id="b_" placeholder="b" class="entry">
+                <label for="x">y + </label>
+                <input type="text" id="c_" placeholder="c" class="entry">
+                <label for="x">z + </label>
+                <input type="text" id="d_" placeholder="d" class="entry">
+                <label for="x">= 0 </label>
+            </div>
+        </div>
+
+        <div class = "Baixo">
+            <div class="botoes">
+                <button id="PlanoCalcular" onclick="calcularPlanos()">
+                    Calcular
+                </button>
+            </div>
+            
+            <div class="Saida">
+                <output id="outputPlanos"> Resultado </output>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/Script.js"></script>
+</body>
+</html>
